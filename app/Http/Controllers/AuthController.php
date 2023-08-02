@@ -20,11 +20,11 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return response()->json(['message' => 'Utente non trovato'], 404);
+            return response()->json(['message' => 'User not found'], 404);
         }
         
         Auth::login($user);
 
-        return response()->json(['message' => 'Login effettuato con successo']);
+        return response()->json(['message' => 'Correctly logged in']);
     }
 }
