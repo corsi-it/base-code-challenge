@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
         ]);
         User::firstOrCreate([
             'name' => 'Jane',
-            'email' => 'Jane@corsi.it',
+            'email' => 'jane@corsi.it',
             'password' => Hash::make('password'),
         ]);
         User::firstOrCreate([
