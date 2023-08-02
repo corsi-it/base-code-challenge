@@ -22,7 +22,7 @@ Segui questi passaggi per configurare il progetto sul tuo ambiente locale:
 2. **Installazione delle dipendenze:**
 
     ```bash
-    sail up -d
+    sail up --build
     sail composer install
     sail npm install
     sail npm run dev
