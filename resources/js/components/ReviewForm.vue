@@ -5,14 +5,14 @@
       <form @submit.prevent="submitReview">
         <div class="mb-4">
           <label for="employee" class="block text-gray-700">Select an employee:</label>
-          <select v-model="selectedEmployee" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+          <select v-model="selectedEmployee" required class="p-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
             <option v-for="employee in employees" :key="employee.id" :value="employee.id">{{ employee.name }}</option>
           </select>
         </div>
   
         <div class="mb-4">
           <label for="rating" class="block text-gray-700">Rating (1 to 5 star):</label>
-          <select v-model="rating" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
+          <select v-model="rating" required class="p-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
             <option v-for="star in 5" :key="star" :value="star"><span v-html="getStarHTML(star)"></span></option>
           </select>
         </div>

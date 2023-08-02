@@ -2,7 +2,7 @@
     <div class="min-h-screen bg-gray-100">
       <header class="bg-white shadow">
         <div class="container mx-auto px-4 py-6">
-          <h1 class="text-3xl font-semibold">Happiness</h1>
+          <h1 class="text-3xl font-semibold">office happiness</h1>
         </div>
       </header>
       <main class="container mx-auto px-4 py-8">

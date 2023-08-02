@@ -23,8 +23,9 @@
           <thead>
             <tr class="bg-gray-200">
               <th class="px-4 py-2">Email</th>
-              <th class="px-4 py-2">Valutazione</th>
-              <th class="px-4 py-2">Recensione</th>
+              <th class="px-4 py-2">Ranking</th>
+              <th class="px-4 py-2">Review</th>
+              <th class="px-4 py-2">Created</th>
             </tr>
           </thead>
           <tbody>
@@ -32,14 +33,15 @@
               <td class="px-4 py-2">{{ review.employee.email }}</td>
               <td class="px-4 py-2" v-html="getStarHTML(review.rating)"></td>
               <td class="px-4 py-2">{{ review.comment }}</td>
+              <td class="px-4 py-2">{{ new Date(review.created_at).toLocaleString() }}</td>
             </tr>
           </tbody>
         </table>
     
         <div v-if="totalPages > 1" class="mt-4 flex items-center justify-center">
-          <button @click="prevPage" :disabled="currentPage === 1" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md mr-2">Precedente</button>
-          <span class="text-gray-600">Pagina {{ currentPage }} di {{ totalPages }}</span>
-          <button @click="nextPage" :disabled="currentPage === totalPages" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md ml-2">Successiva</button>
+          <button @click="prevPage" :disabled="currentPage === 1" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md mr-2">Prev</button>
+          <span class="text-gray-600">Page {{ currentPage }} di {{ totalPages }}</span>
+          <button @click="nextPage" :disabled="currentPage === totalPages" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md ml-2">Next</button>
         </div>
       </div>
     </div>
