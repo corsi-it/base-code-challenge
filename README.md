@@ -60,7 +60,7 @@ Puoi creare una review da CLI usando
     sail artisan reviews:create --email="john@corsi.it" --review="test review from CLI" --rating=4
 
 **Testing**
-creato un test per la creazione delle recensioni utilizzabile da CLI ed uno per il testing del webhook
+creato un test per la creazione delle recensioni ed uno per il testing del webhook
     ```bash
     sail artisan test
 
