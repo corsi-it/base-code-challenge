@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AuthController;
 use App\Models\User;
+use App\Http\Controllers\WebhookController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,3 +36,5 @@ Route::get('/users', function () {
     $users = User::all();
     return response()->json($users);
 });
+
+Route::post('/webhooks/company-reviews', [WebhookController::class, 'receiveCompanyReview']);

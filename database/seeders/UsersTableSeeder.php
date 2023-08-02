@@ -10,27 +10,27 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        User::create([
+        User::firstOrCreate([
             'name' => 'Salvi',
             'email' => 'salvi@corsi.it',
             'password' => Hash::make('password'),
         ]);
-        User::create([
+        User::firstOrCreate([
             'name' => 'John',
             'email' => 'john@corsi.it',
             'password' => Hash::make('password'),
         ]);
-        User::create([
+        User::firstOrCreate([
             'name' => 'Jane',
             'email' => 'Jane@corsi.it',
             'password' => Hash::make('password'),
         ]);
-        User::create([
+        User::firstOrCreate([
             'name' => 'Test',
             'email' => 'test@corsi.it',
             'password' => Hash::make('password'),
         ]);
-        User::create([
+        User::firstOrCreate([
             'name' => 'Tester',
             'email' => 'tester@corsi.it',
             'password' => Hash::make('password'),
