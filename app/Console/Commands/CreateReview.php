@@ -41,10 +41,20 @@ class CreateReview extends Command
             return;
         }
 
+        // Check for forbidden words in the comment
+        $forbiddenWords = ['Boring', 'ugly', 'smelly', 'shitty', '.NET', 'bullshit', 'he owes me money'];
+
+        foreach ($forbiddenWords as $word) {
+            if (strpos($reviewText, $word) !== false) {
+                $this->error('The comment contains forbidden words. Please choose appropriate language.');
+                return;
+            }
+        }
+
         // Create the review
         Review::create([
             'employee_id' => $employee->id,
-            'reviewer_id' => 1, // Assuming the reviewer is user with ID 1 (you can change this accordingly)
+            'reviewer_id' => 1, // Assuming the reviewer is user with ID 1
             'rating' => $rating,
             'comment' => $reviewText,
         ]);
