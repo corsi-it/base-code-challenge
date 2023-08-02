@@ -56,11 +56,13 @@ Puoi effettuare un login utilizzando una di queste email
 * jane@corsi.it
 
 Puoi creare una review da CLI usando
+
     ```bash
     sail artisan reviews:create --email="john@corsi.it" --review="test review from CLI" --rating=4
 
 **Testing**
 creato un test per la creazione delle recensioni ed uno per il testing del webhook
+
     ```bash
     sail artisan test
 
