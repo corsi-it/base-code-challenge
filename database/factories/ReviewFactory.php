@@ -17,6 +17,7 @@ class ReviewFactory extends Factory
             'reviewer_id' => User::inRandomOrder()->first()->id,
             'rating' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->paragraph,
+            'created_at' => $this->faker->dateTimeBetween('-15 days', 'now'),
         ];
     }
 }
