@@ -15,9 +15,10 @@ Segui questi passaggi per configurare il progetto sul tuo ambiente locale:
 
 1. **Clonare il repository**:
 
-   ```bash
-   git clone https://github.com/corsi-it/base-code-challenge
-   cd base-code-challenge
+	```bash
+	git clone https://github.com/corsi-it/base-code-challenge
+	cd base-code-challenge
+	```
 
 2. **Installazione delle dipendenze:**
 
@@ -26,46 +27,53 @@ Segui questi passaggi per configurare il progetto sul tuo ambiente locale:
     sail composer install
     sail npm install
     sail npm run dev
+    ```
 
 3. **Migrazioni e Seed:**
 
     ```bash
     sail artisan migrate --seed
+    ```
 
 4. **Avvia il server di sviluppo:**
 
     ```bash
     sail up -d
+    ```
 
-Il server sarà accessibile all'indirizzo http://localhost:90.
+	Il server sarà accessibile all'indirizzo http://localhost:90.
 
 **Risoluzione dei problemi**
 
 * Se si verificano problemi con le porte in uso, assicurarsi che nessun altro servizio stia utilizzando le stesse porte utilizzate da Sail.
-* Se Sail non funziona correttamente, puoi provare a ricreare l'ambiente eseguendo 
-    ```bash
-    sail down -v 
-    sail up
-    
+* Se Sail non funziona correttamente, puoi provare a ricreare l'ambiente eseguendo
+
+```bash
+sail down -v 
+sail up
+```
+
 **Usage**
 
 Puoi effettuare un login utilizzando una di queste email
-* test@corsi.it
-* tester@corsi.it
-* john@corsi.it
-* jane@corsi.it
+
+- test@corsi.it
+- tester@corsi.it
+- john@corsi.it
+- jane@corsi.it
 
 Puoi creare una review da CLI usando
 
-    ```bash
-    sail artisan reviews:create --email="john@corsi.it" --review="test review from CLI" --rating=4
+```bash
+sail artisan reviews:create --email="john@corsi.it" --review="test review from CLI" --rating=4
+```
 
 **Testing**
-creato un test per la creazione delle recensioni ed uno per il testing del webhook
+    creato un test per la creazione delle recensioni ed uno per il testing del webhook
 
-    ```bash
-    sail artisan test
-
+```bash
+sail artisan test
+```
 
 le parti relative alle top player zone frontend non sono state sviluppate...
 
