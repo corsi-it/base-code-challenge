@@ -1,0 +1,104 @@
+@import '~bootstrap/scss/bootstrap';
+
+// color palette
+$primary: #007bff;
+$secondary: #6c757d;
+$success: #28a745;
+$danger: #dc3545;
+
+body {
+    background-color: #f3f3f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.language-switcher {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.language-switcher a {
+    color: #555;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
+.language-switcher a.active {
+    font-weight: bold;
+    color: $primary;
+}
+
+.login-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+.login-card h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group label {
+    width: 80px;
+    font-weight: bold;
+}
+
+.form-group input {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+}
+
+.login-button {
+    background-color: $success;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: darken($success, 10%);
+}
+
+.error-message {
+    color: $danger;
+    margin-top: 5px;
+}
+
+.logout-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.logout-button:hover {
+    background-color: darken($primary, 10%);
+}

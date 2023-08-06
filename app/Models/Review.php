@@ -14,4 +14,10 @@ class Review extends Model
 
     public $timestamps = ['created_at']; //Use only created_at column
     const UPDATED_AT = null; //and updated_by default null set
+
+    protected $fillable = [
+        'comment',
+        'stars',
+        'reviewed_user',
+    ];
 }
