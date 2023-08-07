@@ -5,10 +5,12 @@
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
 </head>
 <body>
+<!--
     <div class="language-switcher">
         <a href="{{ url('login/it') }}" class="{{ app()->getLocale() === 'it' ? 'active' : '' }}">Italiano</a>
         <a href="{{ url('login/en') }}" class="{{ app()->getLocale() === 'en' ? 'active' : '' }}">English</a>
     </div>
+    -->
     <div class="login-card">
         <h2>Office Happiness Measurement System</h2>
         <form method="POST" action="{{ route('login') }}">
