@@ -39,6 +39,7 @@ Si può eseguire il comando:
 Per lanciare tutte le migration e popolare il database con dati d'esempio.
 Verranno creati 101 utenti e 500 recensioni. Verrà inoltre popolato il database delle parole proibite, che però non ho avuto il tempo di implementare.
 Se non si dispone di un'installazione locale di php, bisognerà prima passare al punto 3. "Esecuzione locale" e poi lanciare i comandi all'interno del container dell'applicazione.
+Si può eseguire l'accesso usando uno degli utenti creati nel db, la password di default è sempre "password".
 
 ## 3. Esecuzione locale
 
