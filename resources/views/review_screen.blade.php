@@ -1,17 +1,23 @@
 <!DOCTYPE html>
+
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <title>Happiness review</title>
+    @livewireStyles
     <link href="{{ asset('css/review_screen.css') }}" rel="stylesheet">
+
 </head>
+
 <body>
+
+<!--
 <div class="language-switcher">
     <a href="{{ url('login/it') }}" class="{{ app()->getLocale() === 'it' ? 'active' : '' }}">Italiano</a>
     <a href="{{ url('login/en') }}" class="{{ app()->getLocale() === 'en' ? 'active' : '' }}">English</a>
 </div>
-
+-->
 <div class="vote-card">
-    <h2>Anonymous happiness review</h2>
+    <h2 class="mb-5">Anonymous happiness review</h2>
     <!--
         <div class="vote-stars">
         <span>Rate:</span>
@@ -24,36 +30,14 @@
         </ul>
         </div>
         -->
-    <form method="POST" action="{{ route('submit-review') }}">
-        @csrf
 
-        <div class="form-group">
-            <label for="email">Email of user to review:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
+    @section('content')
+        @livewire('email-search-select')
+    @endsection
 
-        <div class="form-group">
-            <label for="rating">Stars:</label>
-            <select id="rating" name="rating" required>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="comment">Comment:</label>
-            <textarea id="comment" name="comment" rows="4" required></textarea>
-        </div>
+    @yield('content')
 
 
-
-        <div class="form-group">
-            <button type="submit" class="login-button">Submit Vote</button>
-        </div>
-    </form>
 </div>
 
 @auth
@@ -65,7 +49,8 @@
     </form>
 @endauth
 
-
+@livewireScripts
+@stack('scripts')
 <script>
     const stars = document.querySelectorAll('.fa-star');
 

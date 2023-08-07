@@ -114,4 +114,17 @@ class ReviewController extends Controller
     {
         //
     }
+
+    /**
+     * API responding with full list of reviews stored in the system
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function apiList()
+    {
+        $response = Review::all();
+
+        return response($response, 200);
+    }
+
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static select(string $string)
+ * @method static create(array $array)
  */
 class Review extends Model
 {
