@@ -1,0 +1,18 @@
+.navbar, .dropdown-menu{
+    background: #42414d!important;
+}
+.navbar a{
+    color: #fff!important;
+}
+main{
+    background:#2b2a33!important;
+    min-height: 94.2vh;
+}
+.card{
+    background: #42414d!important;
+    color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.card a, .card-image{
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}

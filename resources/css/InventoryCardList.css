@@ -1,0 +1,12 @@
+.card-image{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.modal .modal-content{
+    background: #42414d;
+    color: white;
+}
