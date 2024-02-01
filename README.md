@@ -40,3 +40,8 @@ Finally you can run server with command:
 $ php artisan serve
 ```
 with default parameters applications url will be [127.0.0.1:8000](http://127.0.0.1:8000)
+
+For creating admin or use you can make use command:
+```bash
+php artisan create:user --name="saba" --email="torikabot@gmail.com" --password="password123" --admin="true"
+```
