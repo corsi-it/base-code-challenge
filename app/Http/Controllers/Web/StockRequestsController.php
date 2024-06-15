@@ -17,9 +17,16 @@ class StockRequestsController extends Controller
 {
     public function index()
     {
-        $stockRequests = StockRequest::with('item')
-            ->with('requestedBy')
-            ->get();
+        $qb = StockRequest::with('item')
+            ->with('requestedBy');
+//            ->get();
+
+        if (auth()->user()->role->name !== 'admin') {
+            $qb->where('requested_by', auth()->user()->id);
+        }
+
+        $stockRequests = $qb->get();
+
         return Inertia::render('StockRequests/Index', [
             'stockRequests' => $stockRequests,
         ]);
@@ -27,7 +34,12 @@ class StockRequestsController extends Controller
 
     public function create()
     {
-        return Inertia::render('StockRequests/Create');
+        $items = Item::with('categories')->get();
+        $categories = $items->pluck('categories')->flatten()->unique();
+        return Inertia::render('StockRequests/Create', [
+            'items'      => $items,
+            'categories' => $categories,
+        ]);
     }
 
     public function store(
