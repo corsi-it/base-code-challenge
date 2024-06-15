@@ -11,9 +11,7 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        return Inertia::render('Auth/Login', [
-            'loginProcessRoute' => route('login.process'),
-        ]);
+        return Inertia::render('Auth/Login');
     }
 
     public function loginStore(Request $request)
