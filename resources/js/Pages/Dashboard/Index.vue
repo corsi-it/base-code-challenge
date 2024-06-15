@@ -1,5 +1,18 @@
 <template>
     <DashboardLayout>
+        <nav class="mb-5">
+            <div class="flex flex-col sm:flex-row justify-end">
+                <div class="sm:mt-0 mt-4 text-center sm:text-right">
+                    <label for="dateFrom" class="mr-2">From:</label>
+                    <input type="date" id="dateFrom" name="dateFrom" class="mr-4" v-model="dateFrom"
+                           @change="reloadChart">
+
+                    <label for="dateTo" class="mr-2">To:</label>
+                    <input type="date" id="dateTo" name="dateTo" class="" v-model="dateTo" @change="reloadChart">
+                </div>
+            </div>
+        </nav>
+
         <div class="flex gap-5">
             <!-- Left Column for the first chart -->
             <div class="w-1/2 p-6 bg-white">
@@ -41,6 +54,8 @@ export default {
     components: {DashboardLayout, Bar},
     data() {
         return {
+            dateFrom: '',
+            dateTo: '',
             userChartIsLoaded: false,
             userChartOptions: {
                 responsive: true,
@@ -76,13 +91,29 @@ export default {
         };
     },
     mounted() {
-        this.fetchUserRequests();
-        this.fetchItemRequests();
+        // this.fetchUserRequests();
+        // this.fetchItemRequests();
     },
     methods: {
+        async reloadChart() {
+            if (this.dateFrom === '' || this.dateTo === '') {
+                return;
+            }
+            await this.fetchUserRequests();
+            await this.fetchItemRequests();
+
+            
+        },
         async fetchUserRequests() {
             try {
+                // Include dateFrom and dateTo in the request query parameters
+                // let params = new URLSearchParams({
+                //     dateFrom: this.dateFrom,
+                //     dateTo: this.dateTo
+                // }).toString();
                 let chartUserRequestRoute = route('charts.userRequests');
+                let queryParams = "?dateFrom=" + this.dateFrom + "&dateTo=" + this.dateTo;
+                chartUserRequestRoute += queryParams;
                 const response = await fetch(chartUserRequestRoute);
                 const data = await response.json();
                 this.userChartData.labels = data.map(user => user.name);
@@ -94,7 +125,10 @@ export default {
         },
         async fetchItemRequests() {
             try {
+                // Include dateFrom and dateTo in the request query parameters
                 let chartItemRequestRoute = route('charts.itemRequests');
+                let queryParams = "?dateFrom=" + this.dateFrom + "&dateTo=" + this.dateTo;
+                chartItemRequestRoute += queryParams;
                 const response = await fetch(chartItemRequestRoute);
                 const data = await response.json();
                 this.itemChartData.labels = data.map(item => item.name);
