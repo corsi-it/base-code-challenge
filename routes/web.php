@@ -71,3 +71,15 @@ Route::get('/dashboard/stock-requests/create', 'App\Http\Controllers\Web\StockRe
 Route::post('/dashboard/stock-requests', 'App\Http\Controllers\Web\StockRequestsController@store')
     ->name('stockRequests.store')
     ->middleware(['auth']);
+
+Route::get('/dashboard/stock-requests/{id}', 'App\Http\Controllers\Web\StockRequestsController@show')
+    ->name('stockRequests.show')
+    ->middleware(['auth']);
+
+Route::get('/dashboard/stock-requests/{id}/edit', 'App\Http\Controllers\Web\StockRequestsController@edit')
+    ->name('stockRequests.edit')
+    ->middleware(['auth']);
+
+Route::put('/dashboard/stock-requests/{id}', 'App\Http\Controllers\Web\StockRequestsController@update')
+    ->name('stockRequests.update')
+    ->middleware(['auth']);
