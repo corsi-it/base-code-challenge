@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Helpers\ItemsHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
@@ -11,9 +12,14 @@ use Inertia\Inertia;
 
 class ItemsController extends Controller
 {
-    public function index()
+    public function index(ItemsHelper $itemsHelper)
     {
         $items = Item::with('categories')->get();
+
+        $today = new \DateTime();
+        foreach ($items as $item) {
+            $item->isInStock = $itemsHelper->isInStock($item, $today);
+        }
 
         return Inertia::render('Items/Index', [
             'items' => $items,
@@ -28,8 +34,9 @@ class ItemsController extends Controller
 
     public function show($id)
     {
-        $item = Item::findOrFail($id);
-        return response()->json($item);
+        return Inertia::render('Items/Show', [
+            'item' => Item::with('categories')->findOrFail($id),
+        ]);
     }
 
     public function update(Request $request, $id)
