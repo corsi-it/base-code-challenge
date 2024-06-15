@@ -19,6 +19,9 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Status
                                 </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -35,6 +38,11 @@
                                     <span v-if="!item.isInStock">
                                         Non Available
                                     </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex gap-1">
+                                    <a :href="showItemRoute(item)"
+                                       class="text-indigo-600 hover:text-indigo-900">View</a>
+                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -58,5 +66,12 @@ export default {
     data() {
         return {};
     },
+    methods: {
+        showItemRoute(item) {
+            return route('items.show', {
+                'id': item.id
+            });
+        }
+    }
 };
 </script>
