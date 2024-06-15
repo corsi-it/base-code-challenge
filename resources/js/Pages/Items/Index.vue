@@ -55,7 +55,7 @@
                                        class="text-indigo-600 hover:text-indigo-900">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">
+                                    <a :href="editItemRoute(item)" class="text-indigo-600 hover:text-indigo-900">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                 </td>
@@ -86,6 +86,11 @@ export default {
     methods: {
         showItemRoute(item) {
             return route('items.show', {
+                'id': item.id
+            });
+        },
+        editItemRoute(item) {
+            return route('items.edit', {
                 'id': item.id
             });
         }
