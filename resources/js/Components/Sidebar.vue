@@ -3,19 +3,10 @@
         <div class="p-6">
             <h2 class="text-2xl font-semibold mb-7">Admin Dashboard</h2>
             <nav>
-                <a href="#"
+                <a v-for="item in menu" :key="item.name" :href="item.link"
                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
-                    Dashboard
+                    {{ item.name }}
                 </a>
-                <a href="#"
-                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
-                    Users
-                </a>
-                <a href="#"
-                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
-                    Settings
-                </a>
-                <!-- Add more links here -->
             </nav>
         </div>
     </div>
@@ -24,5 +15,23 @@
 <script>
 export default {
     name: "Sidebar",
+    data() {
+        return {
+            menu: [
+                {
+                    name: "Dashboard",
+                    link: route("dashboard")
+                },
+                {
+                    name: "Items",
+                    link: route("items.index"),
+                },
+                {
+                    name: "Stock Requests",
+                    link: route("stockRequests.index"),
+                },
+            ],
+        };
+    },
 }
 </script>

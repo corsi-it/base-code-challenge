@@ -8,18 +8,18 @@
                         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Sign in to your account
                         </h1>
-                        <form class="space-y-4 md:space-y-6" @submit.prevent="submitLoginForm">
+                        <form class="space-y-4 md:space-y-6" @submit.prevent="submitForm">
                             <div>
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
                                     email</label>
-                                <input v-model="email" type="email" name="email" id="email"
+                                <input v-model="authForm.email" type="email" name="email" id="email"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        placeholder="name@company.com" required="">
                             </div>
                             <div>
                                 <label for="password"
                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                                <input v-model="password" type="password" name="password" id="password"
+                                <input v-model="authForm.password" type="password" name="password" id="password"
                                        placeholder="••••••••"
                                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                        required="">
@@ -56,20 +56,25 @@
 
 import AuthLayout from "../../Layouts/AuthLayout.vue";
 
+// TODO: Handle error messages
+
 export default {
     components: {AuthLayout},
     data() {
         return {
-            email: '',
-            password: '',
+            authForm: {
+                email: "",
+                password: "",
+            },
         };
     },
 
     methods: {
-        submitLoginForm() {
+        submitForm() {
+            let loginProcessRoute = route("login.store");
             // Qui puoi inviare i dati del modulo al server
             // this.loginForm.post(route("login.store"));
-            console.log(`Email: ${this.email}, Password: ${this.password}`);
+            this.$inertia.post(loginProcessRoute, this.authForm);
         },
     },
 };
