@@ -68,6 +68,7 @@
                 </div>
             </div>
         </div>
+
     </DashboardLayout>
 </template>
 
@@ -79,7 +80,7 @@ export default {
     name: "StockRequestsIndex",
     components: {DashboardLayout},
     props: {
-        stockRequests: Array,
+        stockRequests: Object, // Changed from Array to Object to handle paginated response
     },
     data() {
         return {
