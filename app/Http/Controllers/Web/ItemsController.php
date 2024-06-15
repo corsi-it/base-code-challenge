@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Helpers\ItemsHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -26,16 +27,39 @@ class ItemsController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function create()
     {
-        $item = Item::create($request->all());
-        return response()->json($item, 201);
+        $categories = Category::all();
+        return Inertia::render('Items/Create', [
+            'categories' => $categories,
+        ]);
+    }
+
+    public function store(
+        Request $request
+    )
+    {
+        $validatedData = $request->validate([
+            'name'       => 'required',
+            'sku'        => 'required',
+            'categories' => 'required|array',
+        ]);
+
+        $item = Item::create($validatedData);
+        return redirect()->route('items.index');
     }
 
     public function show($id)
     {
         return Inertia::render('Items/Show', [
             'item' => Item::with('categories')->findOrFail($id),
+        ]);
+    }
+
+    public function edit($id)
+    {
+        return Inertia::render('Items/Edit', [
+            'item' => Item::findOrFail($id),
         ]);
     }
 
