@@ -30,6 +30,10 @@ Route::get('/dashboard/items', 'App\Http\Controllers\Web\ItemsController@index')
     ->name('items.index')
     ->middleware(['auth']);
 
+Route::get('/dashboard/items/{id}', 'App\Http\Controllers\Web\ItemsController@show')
+    ->name('items.show')
+    ->middleware(['auth']);
+
 Route::get('/dashboard/stock-requests', 'App\Http\Controllers\Web\StockRequestsController@index')
     ->name('stockRequests.index')
     ->middleware(['auth']);
