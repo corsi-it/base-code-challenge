@@ -1,5 +1,16 @@
 <template>
     <DashboardLayout>
+        <nav class="mb-5">
+            <div class="flex flex-col sm:flex-row justify-end">
+                <div class="sm:mt-0 mt-4 text-center sm:text-right">
+                    <a :href="newItemUrl"
+                       class="bg-primary-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        New Item
+                    </a>
+                </div>
+            </div>
+        </nav>
+
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -39,10 +50,14 @@
                                         Non Available
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex gap-1">
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex gap-2">
                                     <a :href="showItemRoute(item)"
-                                       class="text-indigo-600 hover:text-indigo-900">View</a>
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                       class="text-indigo-600 hover:text-indigo-900">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>
@@ -64,7 +79,9 @@ export default {
         items: Array
     },
     data() {
-        return {};
+        return {
+            newItemUrl: route('items.create')
+        };
     },
     methods: {
         showItemRoute(item) {
