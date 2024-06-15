@@ -58,31 +58,31 @@ class StockRequestsController extends Controller
                     $fail('The start date and end date are required for sell requests.');
                 }
 
-                $startDate = $request->input('start_date');
-                $endDate = $request->input('end_date');
+                if ($requestType == 'sell') {
+                    $startDate = $request->input('start_date');
+                    $endDate = $request->input('end_date');
 
-                $startDateObj = \DateTime::createFromFormat('Y-m-d', $startDate);
-                $endDateObj = \DateTime::createFromFormat('Y-m-d', $endDate);
+                    $startDateObj = \DateTime::createFromFormat('Y-m-d', $startDate);
+                    $endDateObj = \DateTime::createFromFormat('Y-m-d', $endDate);
 
-                $allDates = $stockRequestsHelper->getDates($startDateObj, $endDateObj);
-                $itemId = $request->input('item_id');
-                $item = Item::find($itemId);
-                if (!$item) {
-                    $fail('Item not found');
-                }
+                    $allDates = $stockRequestsHelper->getDates($startDateObj, $endDateObj);
+                    $itemId = $request->input('item_id');
+                    $item = Item::find($itemId);
+                    if (!$item) {
+                        $fail('Item not found');
+                    }
 
-                foreach ($allDates as $date) {
-                    $canOnDate = $itemsHelper->canBeRequestedOnDate(
-                        $item,
-                        $value,
-                        $date
-                    );
-                    if (!$canOnDate) {
-                        $fail('Not enough orderable stock for the requested quantity on ' . $date->format('Y-m-d'));
+                    foreach ($allDates as $date) {
+                        $canOnDate = $itemsHelper->canBeRequestedOnDate(
+                            $item,
+                            $value,
+                            $date
+                        );
+                        if (!$canOnDate) {
+                            $fail('Not enough orderable stock for the requested quantity on ' . $date->format('Y-m-d'));
+                        }
                     }
                 }
-
-
             }],
             'requestType' => 'required',
             'start_date'  => 'required_if:requestType,sell',
