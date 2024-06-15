@@ -36,6 +36,8 @@ class StockRequestsController extends Controller
         ItemsHelper         $itemsHelper
     )
     {
+        // TODO: Refactor this to move this code to a more appropriate place
+
         $validatedData = $request->validate([
             'item_id'     => 'required',
             'quantity'    => ['required', 'not_in:0', function ($attribute, $value, $fail) use ($request, $stockRequestsHelper, $itemsHelper) {
@@ -86,25 +88,35 @@ class StockRequestsController extends Controller
         return redirect()->route('stockRequests.index');
     }
 
-    public function show(StockRequest $stockRequest)
+    public function show(int $id)
     {
-        return view('StockRequests.show', compact('stockRequest'));
+        $stockRequest = StockRequest::with('item')
+            ->with('requestedBy')
+            ->findOrFail($id);
+        return Inertia::render('StockRequests/Show', [
+            'stockRequest' => $stockRequest,
+        ]);
     }
 
-    public function edit(StockRequest $stockRequest)
+    public function edit(int $id)
     {
-        return view('StockRequests.edit', compact('stockRequest'));
+        $stockRequest = StockRequest::with('item')
+            ->with('requestedBy')
+            ->findOrFail($id);
+        return Inertia::render('StockRequests/Edit', [
+            'stockRequest' => $stockRequest,
+        ]);
     }
 
-    public function update(Request $request, StockRequest $stockRequest)
+    public function update(Request $request, int $id)
     {
-        $stockRequest->update($request->all());
-        return redirect()->route('StockRequests.index');
-    }
+        $stockRequest = StockRequest::findOrFail($id);
+        $validatedData = $request->validate([
+            'status' => 'required',
+        ]);
 
-    public function destroy(StockRequest $stockRequest)
-    {
-        $stockRequest->delete();
+        $stockRequest->update(['status' => $validatedData['status']]);
         return redirect()->route('stockRequests.index');
     }
+
 }
