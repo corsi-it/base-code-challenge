@@ -17,6 +17,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', 'App\Http\Controllers\Web\AuthController@login')->name('login');
+Route::get('/login', 'App\Http\Controllers\Web\AuthController@login')
+    ->name('login');
+Route::post('/login', 'App\Http\Controllers\Web\AuthController@loginProcess')
+    ->name('login.store');
 
-Route::get('/dashboard', 'App\Http\Controllers\Web\DashboardController@index')->name('dashboard');
+Route::get('/dashboard', 'App\Http\Controllers\Web\DashboardController@index')
+    ->name('dashboard')
+    ->middleware(['auth']);
+
+Route::get('/dashboard/items', 'App\Http\Controllers\Web\ItemsController@index')
+    ->name('items.index')
+    ->middleware(['auth']);
+
+Route::get('/dashboard/stock-requests', 'App\Http\Controllers\Web\StockRequestsController@index')
+    ->name('stockRequests.index')
+    ->middleware(['auth']);
+
+Route::get('/dashboard/stock-requests/create', 'App\Http\Controllers\Web\StockRequestsController@create')
+    ->name('stockRequests.create')
+    ->middleware(['auth']);
+
+Route::post('/dashboard/stock-requests', 'App\Http\Controllers\Web\StockRequestsController@store')
+    ->name('stockRequests.store')
+    ->middleware(['auth']);
