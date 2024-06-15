@@ -9,21 +9,35 @@ use App\Models\StockRequest;
 class ItemsHelper
 {
 
-    public function isInStock(Item $item, \DateTime $dateTime)
+    public function canBeRequestedOnDate(
+        Item      $item,
+        int       $quantity,
+        \DateTime $dateTime,
+    )
     {
-        // fetch count
-        $totalPositiveStock = StockRequest::where('status', StockRequestStatusEnum::APPROVED)
+        $totalPositiveStockQty = StockRequest::where('status', StockRequestStatusEnum::APPROVED)
             ->where('item_id', $item->id)
             ->where('quantity', '>', 0)
-            ->sum();
+            ->sum('quantity');
 
-        $totalNegativeStock = StockRequest::where('status', StockRequestStatusEnum::APPROVED)
+        $totalNegativeStockQty = intval($totalPositiveStockQty);
+
+        $totalNegativeStockQty = StockRequest::whereNot('status', StockRequestStatusEnum::REJECTED)
             ->where('item_id', $item->id)
             ->where('quantity', '<', 0)
             ->where('start_date', '<=', $dateTime)
             ->where('end_date', '>=', $dateTime)
-            ->sum();
+            ->sum('quantity');
 
-        return $totalPositiveStock - $totalNegativeStock > 0;
+        $totalNegativeStockQty = intval($totalNegativeStockQty);
+
+        $totalQty = $totalPositiveStockQty + $totalNegativeStockQty;
+
+        return $totalQty >= $quantity;
+    }
+
+    public function isInStock(Item $item, \DateTime $dateTime)
+    {
+        return $this->canBeRequestedOnDate($item, 1, $dateTime);
     }
 }
