@@ -47,4 +47,19 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function stockRequests()
+    {
+        return $this->hasMany(StockRequest::class, 'requested_by');
+    }
+
+    public function approvedStockRequests()
+    {
+        return $this->hasMany(StockRequest::class, 'approved_by');
+    }
+
+    public function rejectedStockRequests()
+    {
+        return $this->hasMany(StockRequest::class, 'rejected_by');
+    }
 }
