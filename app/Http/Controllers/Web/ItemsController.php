@@ -47,10 +47,7 @@ class ItemsController extends Controller
 
         $item = Item::create($validatedData);
 
-        foreach ($validatedData['categories'] as $categoryId) {
-            $category = Category::findOrFail($categoryId);
-            $item->categories()->attach($category);
-        }
+        $item->categories()->sync($validatedData['categories'] ?? []);
 
         return redirect()->route('items.index');
     }
@@ -83,6 +80,8 @@ class ItemsController extends Controller
         ]);
 
         $item->update($validatedData);
+        $item->categories()->sync($validatedData['categories'] ?? []);
+
         return redirect()->route('items.index');
     }
 
