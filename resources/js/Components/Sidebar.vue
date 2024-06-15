@@ -1,7 +1,7 @@
 <template>
-    <div class="h-screen w-64 bg-gray-400 text-white">
+    <div class="h-screen w-64 bg-gray-600 text-white">
         <div class="p-6">
-            <h2 class="text-2xl font-semibold mb-7">Admin Dashboard</h2>
+            <h2 class="text-2xl font-semibold mb-7">Dashboard</h2>
             <nav>
                 <a v-for="item in menu" :key="item.name" :href="item.link"
                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white">
