@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Helpers\ItemsHelper;
+use App\Helpers\StockRequestsHelper;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +15,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ItemsHelper::class, function () {
             return new ItemsHelper();
+        });
+
+        $this->app->bind(StockRequestsHelper::class, function () {
+            return new StockRequestsHelper();
         });
     }
 
