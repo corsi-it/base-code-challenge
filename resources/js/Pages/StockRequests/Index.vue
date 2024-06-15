@@ -35,6 +35,9 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Period
                                 </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -47,6 +50,16 @@
                                     {{ parseDate(stockRequest.start_date) }}
                                     -
                                     {{ parseDate(stockRequest.end_date) }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex gap-2">
+                                    <a :href="showStockRequestRoute(stockRequest)"
+                                       class="text-indigo-600 hover:text-indigo-900">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a :href="editStockRequestRoute(stockRequest)"
+                                       class="text-indigo-600 hover:text-indigo-900">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>
@@ -80,6 +93,16 @@ export default {
             }
             return new Date(date).toISOString().slice(0, 10).replaceAll("-", "/");
         },
-    },
+        showStockRequestRoute(stockRequest) {
+            return route('stockRequests.show', {
+                'id': stockRequest.id
+            });
+        },
+        editStockRequestRoute(stockRequest) {
+            return route('stockRequests.edit', {
+                'id': stockRequest.id
+            });
+        }
+    }
 };
 </script>

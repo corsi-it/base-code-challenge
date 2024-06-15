@@ -37,7 +37,7 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
 
 export default {
-    name: "Dashboard",
+    name: "DashboardIndex",
     components: {DashboardLayout, Bar},
     data() {
         return {
