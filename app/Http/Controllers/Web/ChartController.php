@@ -11,18 +11,41 @@ class ChartController extends Controller
 {
     public function userRequests(Request $request)
     {
-        $users = User::withCount('stockRequests')
+        $request->validate([
+            'dateFrom' => 'required|date',
+            'dateTo'   => 'required|date',
+        ]);
+
+        $dateFrom = $request->dateFrom;
+        $dateTo = $request->dateTo;
+
+        $users = User::withCount(['stockRequests' => function ($query) use ($dateFrom, $dateTo) {
+            if ($dateFrom && $dateTo) {
+                $query->whereBetween('created_at', [$dateFrom . ' 00:00:00', $dateTo . ' 23:59:59']);
+            }
+        }])
             ->orderBy('stock_requests_count', 'desc')
             ->take(5)
             ->get();
-
         // return json response
         return response()->json($users);
     }
 
     public function itemRequests(Request $request)
     {
-        $items = Item::withCount('stockRequests')
+        $request->validate([
+            'dateFrom' => 'required|date',
+            'dateTo'   => 'required|date',
+        ]);
+
+        $dateFrom = $request->dateFrom;
+        $dateTo = $request->dateTo;
+
+        $items = Item::withCount(['stockRequests' => function ($query) use ($dateFrom, $dateTo) {
+            if ($dateFrom && $dateTo) {
+                $query->whereBetween('created_at', [$dateFrom . ' 00:00:00', $dateTo . ' 23:59:59']);
+            }
+        }])
             ->orderBy('stock_requests_count', 'desc')
             ->take(5)
             ->get();
