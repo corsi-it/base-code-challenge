@@ -13,52 +13,53 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'App\Http\Controllers\Web\DefaultController@index')
+    ->name('home');
 
 Route::get('/login', 'App\Http\Controllers\Web\AuthController@login')
     ->name('login');
-Route::post('/login', 'App\Http\Controllers\Web\AuthController@loginProcess')
+Route::post('/login', 'App\Http\Controllers\Web\AuthController@loginStore')
     ->name('login.store');
 
 Route::get('/dashboard', 'App\Http\Controllers\Web\DashboardController@index')
     ->name('dashboard')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
 
-Route::get('/dashboard/logout', 'App\Http\Controllers\Web\AuthController@logout');
+Route::get('/dashboard/logout', 'App\Http\Controllers\Web\AuthController@logout')
+    ->name('logout')
+    ->middleware(['auth']);
 
 Route::get('/dashboard/charts/user-requests', 'App\Http\Controllers\Web\ChartController@userRequests')
     ->name('charts.userRequests')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
 
 Route::get('/dashboard/charts/item-requests', 'App\Http\Controllers\Web\ChartController@itemRequests')
     ->name('charts.itemRequests')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
 
 Route::get('/dashboard/items', 'App\Http\Controllers\Web\ItemsController@index')
     ->name('items.index')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
 
 Route::get('/dashboard/items/create', 'App\Http\Controllers\Web\ItemsController@create')
     ->name('items.create')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
 
 Route::post('/dashboard/items', 'App\Http\Controllers\Web\ItemsController@store')
     ->name('items.store')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
 
 Route::get('/dashboard/items/{id}', 'App\Http\Controllers\Web\ItemsController@show')
     ->name('items.show')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
 
 Route::get('/dashboard/items/{id}/edit', 'App\Http\Controllers\Web\ItemsController@edit')
     ->name('items.edit')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
 
 Route::put('/dashboard/items/{id}', 'App\Http\Controllers\Web\ItemsController@update')
     ->name('items.update')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
 
 Route::get('/dashboard/stock-requests', 'App\Http\Controllers\Web\StockRequestsController@index')
     ->name('stockRequests.index')
@@ -78,8 +79,8 @@ Route::get('/dashboard/stock-requests/{id}', 'App\Http\Controllers\Web\StockRequ
 
 Route::get('/dashboard/stock-requests/{id}/edit', 'App\Http\Controllers\Web\StockRequestsController@edit')
     ->name('stockRequests.edit')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
 
 Route::put('/dashboard/stock-requests/{id}', 'App\Http\Controllers\Web\StockRequestsController@update')
     ->name('stockRequests.update')
-    ->middleware(['auth']);
+    ->middleware(['auth', 'role.admin']);
