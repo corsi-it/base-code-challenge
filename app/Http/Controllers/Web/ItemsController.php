@@ -42,10 +42,16 @@ class ItemsController extends Controller
         $validatedData = $request->validate([
             'name'       => 'required',
             'sku'        => 'required',
-            'categories' => 'required|array',
+            'categories' => 'array',
         ]);
 
         $item = Item::create($validatedData);
+
+        foreach ($validatedData['categories'] as $categoryId) {
+            $category = Category::findOrFail($categoryId);
+            $item->categories()->attach($category);
+        }
+
         return redirect()->route('items.index');
     }
 
@@ -58,16 +64,26 @@ class ItemsController extends Controller
 
     public function edit($id)
     {
+        $item = Item::with('categories')->findOrFail($id);
+        $categories = Category::all();
         return Inertia::render('Items/Edit', [
-            'item' => Item::findOrFail($id),
+            'item'       => $item,
+            'categories' => $categories,
         ]);
     }
 
     public function update(Request $request, $id)
     {
         $item = Item::findOrFail($id);
-        $item->update($request->all());
-        return response()->json($item);
+
+        $validatedData = $request->validate([
+            'name'       => 'required',
+            'sku'        => 'required',
+            'categories' => 'array',
+        ]);
+
+        $item->update($validatedData);
+        return redirect()->route('items.index');
     }
 
     public function destroy($id)

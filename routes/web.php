@@ -42,6 +42,14 @@ Route::get('/dashboard/items/{id}', 'App\Http\Controllers\Web\ItemsController@sh
     ->name('items.show')
     ->middleware(['auth']);
 
+Route::get('/dashboard/items/{id}/edit', 'App\Http\Controllers\Web\ItemsController@edit')
+    ->name('items.edit')
+    ->middleware(['auth']);
+
+Route::put('/dashboard/items/{id}', 'App\Http\Controllers\Web\ItemsController@update')
+    ->name('items.update')
+    ->middleware(['auth']);
+
 Route::get('/dashboard/stock-requests', 'App\Http\Controllers\Web\StockRequestsController@index')
     ->name('stockRequests.index')
     ->middleware(['auth']);
