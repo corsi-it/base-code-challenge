@@ -26,6 +26,16 @@ Route::get('/dashboard', 'App\Http\Controllers\Web\DashboardController@index')
     ->name('dashboard')
     ->middleware(['auth']);
 
+Route::get('/dashboard/logout', 'App\Http\Controllers\Web\AuthController@logout');
+
+Route::get('/dashboard/charts/user-requests', 'App\Http\Controllers\Web\ChartController@userRequests')
+    ->name('charts.userRequests')
+    ->middleware(['auth']);
+
+Route::get('/dashboard/charts/item-requests', 'App\Http\Controllers\Web\ChartController@itemRequests')
+    ->name('charts.itemRequests')
+    ->middleware(['auth']);
+
 Route::get('/dashboard/items', 'App\Http\Controllers\Web\ItemsController@index')
     ->name('items.index')
     ->middleware(['auth']);
