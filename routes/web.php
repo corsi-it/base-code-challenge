@@ -18,3 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/login', 'App\Http\Controllers\Web\AuthController@login')->name('login');
+
+Route::get('/dashboard', 'App\Http\Controllers\Web\DashboardController@index')->name('dashboard');
