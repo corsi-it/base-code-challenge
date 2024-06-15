@@ -31,9 +31,9 @@
                 <div class="h-72"> <!-- Tailwind class for fixed height -->
                     <Bar
                         id="users-chart"
-                        v-if="userChartIsLoaded"
-                        :options="userChartOptions"
-                        :data="userChartData"
+                        v-if="itemChartIsLoaded"
+                        :options="itemChartOptions"
+                        :data="itemChartData"
                     />
                 </div>
             </div>
@@ -90,10 +90,6 @@ export default {
             }
         };
     },
-    mounted() {
-        // this.fetchUserRequests();
-        // this.fetchItemRequests();
-    },
     methods: {
         async reloadChart() {
             if (this.dateFrom === '' || this.dateTo === '') {
@@ -101,16 +97,9 @@ export default {
             }
             await this.fetchUserRequests();
             await this.fetchItemRequests();
-
-            
         },
         async fetchUserRequests() {
             try {
-                // Include dateFrom and dateTo in the request query parameters
-                // let params = new URLSearchParams({
-                //     dateFrom: this.dateFrom,
-                //     dateTo: this.dateTo
-                // }).toString();
                 let chartUserRequestRoute = route('charts.userRequests');
                 let queryParams = "?dateFrom=" + this.dateFrom + "&dateTo=" + this.dateTo;
                 chartUserRequestRoute += queryParams;
