@@ -66,7 +66,7 @@ export default {
                 labels: [],
                 datasets: [
                     {
-                        label: 'Number of Requests',
+                        label: 'Number of Requests by user',
                         backgroundColor: '#f87979',
                         data: [] // Number of requests will be set here
                     }
@@ -82,13 +82,22 @@ export default {
                 labels: [],
                 datasets: [
                     {
-                        label: 'Number of Requests',
+                        label: 'Number of Requests by Item',
                         backgroundColor: '#f87979',
                         data: [] // Number of requests will be set here
                     }
                 ]
             }
         };
+    },
+    mounted() {
+        this.reloadChart();
+        this.reloadIntervalId = setInterval(this.reloadChart, 30000);
+    },
+    beforeDestroy() {
+        if (this.reloadIntervalId) {
+            clearInterval(this.reloadIntervalId);
+        }
     },
     methods: {
         async reloadChart() {
@@ -105,23 +114,41 @@ export default {
                 chartUserRequestRoute += queryParams;
                 const response = await fetch(chartUserRequestRoute);
                 const data = await response.json();
-                this.userChartData.labels = data.map(user => user.name);
-                this.userChartData.datasets[0].data = data.map(user => user.stock_requests_count);
+                // Replace the entire labels and datasets array
+                this.userChartData = {
+                    ...this.userChartData,
+                    labels: data.map(user => user.name),
+                    datasets: [
+                        {
+                            ...this.userChartData.datasets[0],
+                            data: data.map(user => user.stock_requests_count)
+                        }
+                    ]
+                };
                 this.userChartIsLoaded = true;
             } catch (error) {
                 console.error("Failed to fetch user requests data:", error);
             }
         },
+
         async fetchItemRequests() {
             try {
-                // Include dateFrom and dateTo in the request query parameters
                 let chartItemRequestRoute = route('charts.itemRequests');
                 let queryParams = "?dateFrom=" + this.dateFrom + "&dateTo=" + this.dateTo;
                 chartItemRequestRoute += queryParams;
                 const response = await fetch(chartItemRequestRoute);
                 const data = await response.json();
-                this.itemChartData.labels = data.map(item => item.name);
-                this.itemChartData.datasets[0].data = data.map(item => item.stock_requests_count);
+                // Replace the entire labels and datasets array
+                this.itemChartData = {
+                    ...this.itemChartData,
+                    labels: data.map(item => item.name),
+                    datasets: [
+                        {
+                            ...this.itemChartData.datasets[0],
+                            data: data.map(item => item.stock_requests_count)
+                        }
+                    ]
+                };
                 this.itemChartIsLoaded = true;
             } catch (error) {
                 console.error("Failed to fetch item requests data:", error);
