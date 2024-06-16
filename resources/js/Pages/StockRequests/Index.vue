@@ -56,7 +56,8 @@
                                        class="text-indigo-600 hover:text-indigo-900">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
-                                    <a :href="editStockRequestRoute(stockRequest)"
+                                    <a v-if="isAdmin"
+                                       :href="editStockRequestRoute(stockRequest)"
                                        class="text-indigo-600 hover:text-indigo-900">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
@@ -86,6 +87,11 @@ export default {
         return {
             newStockRequestUrl: route("stockRequests.create"),
         };
+    },
+    computed: {
+        isAdmin() {
+            return this.$page.props.auth.user.role.name === "admin";
+        }
     },
     methods: {
         parseDate(date) {
