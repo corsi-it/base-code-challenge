@@ -20,6 +20,7 @@ class StockRequest extends Model
         'approved_at',
         'rejected_by',
         'rejected_at',
+        'created_at',
     ];
 
     public function item()
