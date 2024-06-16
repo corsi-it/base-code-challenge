@@ -15,7 +15,7 @@ class RoleAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user()->role->name !== 'admin') {
+        if ($request->user()->role->name !== 'admin') {
             return redirect()->route('stockRequests.index');
         }
 
