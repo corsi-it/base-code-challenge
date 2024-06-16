@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\StockRequestStatusEnum;
 use App\Helpers\ItemsHelper;
 use App\Helpers\StockRequestsHelper;
+use App\Http\Requests\StoreStockRequest;
 use App\Models\Item;
 use App\Models\StockRequest;
 use Illuminate\Http\Request;
@@ -42,51 +43,12 @@ class StockRequestsController extends Controller
     }
 
     public function store(
-        Request             $request,
+        StoreStockRequest   $request,
         StockRequestsHelper $stockRequestsHelper,
         ItemsHelper         $itemsHelper
     )
     {
-        // TODO: Refactor this to move this code to a more appropriate place
-
-        $validatedData = $request->validate([
-            'item_id'     => 'required',
-            'quantity'    => ['required', 'not_in:0', function ($attribute, $value, $fail) use ($request, $stockRequestsHelper, $itemsHelper) {
-                $requestType = $request->input('requestType');
-                if ($requestType == 'sell' && (!$request->has('start_date') || !$request->has('end_date'))) {
-                    $fail('The start date and end date are required for sell requests.');
-                }
-
-                if ($requestType == 'sell') {
-                    $startDate = $request->input('start_date');
-                    $endDate = $request->input('end_date');
-
-                    $startDateObj = \DateTime::createFromFormat('Y-m-d', $startDate);
-                    $endDateObj = \DateTime::createFromFormat('Y-m-d', $endDate);
-
-                    $allDates = $stockRequestsHelper->getDates($startDateObj, $endDateObj);
-                    $itemId = $request->input('item_id');
-                    $item = Item::find($itemId);
-                    if (!$item) {
-                        $fail('Item not found');
-                    }
-
-                    foreach ($allDates as $date) {
-                        $canOnDate = $itemsHelper->canBeRequestedOnDate(
-                            $item,
-                            $value,
-                            $date
-                        );
-                        if (!$canOnDate) {
-                            $fail('Not enough orderable stock for the requested quantity on ' . $date->format('Y-m-d'));
-                        }
-                    }
-                }
-            }],
-            'requestType' => 'required',
-            'start_date'  => 'required_if:requestType,sell',
-            'end_date'    => 'required_if:requestType,sell',
-        ]);
+        $validatedData = $request->validated();
 
         $currentUser = auth()->user();
         $validatedData['requested_by'] = $currentUser->id;
