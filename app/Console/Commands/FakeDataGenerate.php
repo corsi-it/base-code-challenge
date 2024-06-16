@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Category;
+use App\Models\Item;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -35,13 +37,22 @@ class FakeDataGenerate extends Command
                 'password' => bcrypt($password = 'password'),
             ]);
             $user->role()->associate($userRole);
-
-            $user->save();
-
             $this->info("User {$user->email} created with password {$password}");
         }
 
+        // Generate 10 categories
 
+        foreach (range(1, 10) as $i) {
+            $category = Category::factory()->create();
+            $this->info("Category {$category->name} created");
+        }
+
+        // Generate 10 items
+
+        foreach (range(1, 10) as $i) {
+            $item = Item::factory()->create();
+            $this->info("Item {$item->name} created");
+        }
 
     }
 }
