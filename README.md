@@ -1,50 +1,72 @@
 # Michele Capichioni Code Challenge
 
-## Getting Started
+## Guide to run the project
 
-### Roles
+Start by cloning the repository to your local machine.
 
-Create roles
+```bash
+git clone https://github.com/capimichi/base-code-challenge.git
+```
 
-´´´bash
-./vendor/bin/sail artisan tinker
-´´´
+Install the dependencies.
 
-Then write the following code
+```bash
+composer install
+```
 
-´´´php
-$role = new App\Models\Role();
-$role->name = 'admin';
-$role->save();
+Copy the `.env.example` file to `.env` and configure the database.
 
-$role = new App\Models\Role();
-$role->name = 'user';
-$role->save();
-´´´
+```bash
+cp .env.example .env
+```
 
-### User
+Install sail
 
-Create admin and user
+```bash
+php artisan sail:install
+```
 
-´´´bash
-./vendor/bin/sail artisan tinker
-´´´
+Start sail
 
-Then write the following code
+```bash
+./vendor/bin/sail up
+```
 
-´´´php
-$user = new App\Models\User();
-$user->password = Hash::make('password');
-$user->email = 'admin@test.com';
-$user->name = 'Admin Test';
-$user->role_id = 1;
-$user->save();
+Generate the application key.
 
-$user = new App\Models\User();
-$user->password = Hash::make('password');
-$user->email = 'user@test.com';
-$user->name = 'User Test';
-$user->role_id = 2;
-$user->save();
-´´´
+```bash
+./vendor/bin/sail artisan key:generate
+```
 
+Install npm dependencies.
+
+```bash
+./vendor/bin/sail npm install
+```
+
+If it throws an error, try removing package-lock.json and node_modules and run the command again.
+
+Start frontend development server.
+
+```bash
+./vendor/bin/sail npm run dev
+```
+
+Migrate the database
+
+```bash
+./vendor/bin/sail artisan migrate
+```
+
+Create required roles
+
+```bash
+./vendor/bin/sail artisan app:role-create --name=admin
+./vendor/bin/sail artisan app:role-create --name=user
+```
+
+Generate the sample data
+
+```bash
+./vendor/bin/sail artisan app:fake-data-generate
+```
