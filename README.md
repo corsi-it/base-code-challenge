@@ -70,3 +70,21 @@ Generate the sample data
 ```bash
 ./vendor/bin/sail artisan app:fake-data-generate
 ```
+
+Now you can login to the dashboard with the credentials that you can see in console.
+
+## Dashboard areas
+
+### Dashboard index charts
+
+Here the admin, after selecting the date period, can see some charts with data.
+
+### Items
+
+Here the admin can see the list of items and can create, edit.
+
+### Requests
+
+Here the admin can see the list of requests and can approve or reject them.
+
+The normal user can create a request.
