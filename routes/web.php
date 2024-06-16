@@ -20,7 +20,6 @@ Route::post('/login', 'App\Http\Controllers\Web\AuthController@loginStore')->nam
 // Group routes that only require 'auth' middleware
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', 'App\Http\Controllers\Web\AuthController@logout')->name('logout');
-    Route::get('/dashboard', 'App\Http\Controllers\Web\DashboardController@index')->name('dashboard');
     Route::get('/dashboard/stock-requests', 'App\Http\Controllers\Web\StockRequestsController@index')->name('stockRequests.index');
     Route::get('/dashboard/stock-requests/create', 'App\Http\Controllers\Web\StockRequestsController@create')->name('stockRequests.create');
     Route::post('/dashboard/stock-requests', 'App\Http\Controllers\Web\StockRequestsController@store')->name('stockRequests.store');
@@ -30,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Group routes that require both 'auth' and 'role.admin' middleware
 Route::middleware(['auth', 'role.admin'])->group(function () {
+    Route::get('/dashboard', 'App\Http\Controllers\Web\DashboardController@index')->name('dashboard');
     Route::get('/dashboard/charts/user-requests', 'App\Http\Controllers\Web\ChartController@userRequests')->name('charts.userRequests');
     Route::get('/dashboard/charts/item-requests', 'App\Http\Controllers\Web\ChartController@itemRequests')->name('charts.itemRequests');
     Route::get('/dashboard/items', 'App\Http\Controllers\Web\ItemsController@index')->name('items.index');
