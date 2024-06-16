@@ -69,7 +69,6 @@ class FakeDataGenerate extends Command
 
         foreach (range(1, 10) as $i) {
             $item = Item::factory()->create();
-            $this->info("Item {$item->name} created");
 
             // Assign random categories to the item
             $categories = Category::inRandomOrder()->limit(rand(1, 7))->get();
