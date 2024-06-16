@@ -18,8 +18,8 @@ class ItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word,
-            'sku'  => $this->faker->unique()->bothify('SKU-####'),
+            'name' => ucwords($this->faker->words(4, true)),
+            'sku'  => $this->faker->unique()->bothify('SKU-######'),
         ];
     }
 
