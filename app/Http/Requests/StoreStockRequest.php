@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Helpers\ItemsHelper;
 use App\Helpers\StockRequestsHelper;
-use App\Models\Item;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreStockRequest extends FormRequest
@@ -27,12 +26,38 @@ class StoreStockRequest extends FormRequest
     public function rules()
     {
         return [
-            'item_id' => 'required|exists:items,id',
-            'quantity' => ['required', 'not_in:0', $this->quantityValidation()],
+            'item_id'     => 'required|exists:items,id',
+            'quantity'    => ['required', 'not_in:0', $this->quantityValidation()],
             'requestType' => 'required',
-            'start_date' => 'required_if:requestType,sell|date',
-            'end_date' => 'required_if:requestType,sell|date|after_or_equal:start_date',
+            'start_date'  => [
+                'required_if:requestType,sell',
+                $this->startDateValidation(),
+            ],
+            'end_date'    => [
+                'required_if:requestType,sell',
+                $this->endDateValidation(),
+            ],
         ];
+    }
+
+    protected function startDateValidation()
+    {
+        return function ($attribute, $value, $fail) {
+            if ($this->requestType == 'sell' && empty($value)) {
+                $fail('The start date is required for sell requests.');
+            }
+        };
+    }
+
+    protected function endDateValidation()
+    {
+        return function ($attribute, $value, $fail) {
+            if ($this->requestType == 'sell' && empty($value)) {
+                $fail('The end date is required for sell requests.');
+            } elseif ($this->requestType == 'sell' && !empty($this->start_date) && $value < $this->start_date) {
+                $fail('The end date must be after or equal to the start date.');
+            }
+        };
     }
 
     protected function quantityValidation()
@@ -44,9 +69,19 @@ class StoreStockRequest extends FormRequest
 
             if ($this->requestType == 'sell') {
                 // Assuming $this->item is automatically resolved using route model binding
-                $allDates = app(StockRequestsHelper::class)->getDates($this->start_date, $this->end_date);
+
+                // try converting string to \DateTime
+                $startDate = new \DateTime($this->start_date);
+                $endDate = new \DateTime($this->end_date);
+
+                $itemId = $this->item_id;
+                $item = \App\Models\Item::find($itemId);
+                if (!$item) {
+                    $fail('Item not found.');
+                }
+                $allDates = app(StockRequestsHelper::class)->getDates($startDate, $endDate);
                 foreach ($allDates as $date) {
-                    if (!app(ItemsHelper::class)->canBeRequestedOnDate($this->item, $value, $date)) {
+                    if (!app(ItemsHelper::class)->canBeRequestedOnDate($item, $value, $date)) {
                         $fail('Not enough orderable stock for the requested quantity on ' . $date->format('Y-m-d'));
                     }
                 }
