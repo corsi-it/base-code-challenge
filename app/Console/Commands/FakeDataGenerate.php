@@ -29,9 +29,21 @@ class FakeDataGenerate extends Command
      */
     public function handle()
     {
+        $adminRole = Role::where('name', 'admin')->first();
+
+        // Generate 1 admin user
+        $admin = User::factory()->create([
+            'password' => bcrypt($password = 'password'),
+        ]);
+        $admin->role()->associate($adminRole);
+        $admin->save();
+
         // Generate 10 random users
         $userRole = Role::where('name', 'user')->first();
-        $adminRole = Role::where('name', 'admin')->first();
+
+        $this->info('You can use the following credentials to login as an admin user:');
+        $this->info("Email: {$admin->email}");
+        $this->info("Password: {$password}");
 
         foreach (range(1, 10) as $i) {
             $user = User::factory()->create([
@@ -39,14 +51,18 @@ class FakeDataGenerate extends Command
             ]);
             $user->role()->associate($userRole);
             $user->save();
-            $this->info("User {$user->email} created with password {$password}");
         }
+
+        $this->info('---');
+
+        $this->info('You can use the following credentials to login as a standard user:');
+        $this->info("Email: {$user->email}");
+        $this->info("Password: {$password}");
 
         // Generate 10 categories
 
         foreach (range(1, 10) as $i) {
             $category = Category::factory()->create();
-            $this->info("Category {$category->name} created");
         }
 
         // Generate 10 items
@@ -90,8 +106,6 @@ class FakeDataGenerate extends Command
                 // Update the created at date to be between the start and end date
 //                $item->stockRequests()->latest()->first()->update(['created_at' => $createdAt]);
 //                $item->stockRequests()->latest()->first()->save();
-
-                $this->info("Stock request for item {$item->name} created");
             }
 
         }
