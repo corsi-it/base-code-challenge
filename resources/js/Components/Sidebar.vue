@@ -22,7 +22,7 @@ export default {
         getMenuItems() {
             let menuItems = [];
 
-            if (this.$page.props.auth.user.role === "admin") {
+            if (this.$page.props.auth.user.role.name === "admin") {
                 menuItems.push({
                     name: "Dashboard",
                     link: route("dashboard")
