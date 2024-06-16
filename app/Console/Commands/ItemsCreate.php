@@ -11,7 +11,7 @@ class ItemsCreate extends Command
      *
      * @var string
      */
-    protected $signature = 'app:items-create {--name=} {--sku=}';
+    protected $signature = 'app:items-create {--name=} {--sku=} {--category_id=}';
 
     /**
      * The console command description.
@@ -36,9 +36,24 @@ class ItemsCreate extends Command
             $sku = $this->ask('What is the SKU of the item?');
         }
 
+        $categoryId = $this->option('category_id');
+        if (empty($categoryId)) {
+            $categoryId = $this->ask('What is the category ID of the item? (press enter to skip)');
+        }
+
         $item = new \App\Models\Item();
         $item->name = $name;
         $item->sku = $sku;
+
+        if (!empty($categoryId)) {
+            $category = \App\Models\Category::find($categoryId);
+            if (!$category) {
+                $this->error('Category not found');
+                return;
+            }
+            $item->category()->associate($category);
+        }
+
         $item->save();
     }
 }
