@@ -5,7 +5,7 @@ namespace App\Helpers;
 class StockRequestsHelper
 {
 
-    public function getDates(\DateTime $startDate, \DateTime $endDate)
+    public function getDates(?\DateTime $startDate, ?\DateTime $endDate)
     {
         if (empty($startDate) || empty($endDate)) {
             return [];
