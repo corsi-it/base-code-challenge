@@ -55,7 +55,7 @@
                         </tbody>
                     </table>
 
-                    <p class="text-red-500 text-xs italic" v-if="form.errors.item_id">{{ form.errors.item_id }}</p>
+                    <p class="text-red-500 text-xs italic mt-3" v-if="form.errors.item_id">{{ form.errors.item_id }}</p>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="quantity">
@@ -67,7 +67,7 @@
                         <option value="buy">Buy</option>
                         <option value="sell">Sell</option>
                     </select>
-                    <p class="text-red-500 text-xs italic" v-if="form.errors.requestType">{{
+                    <p class="text-red-500 text-xs italic mt-3" v-if="form.errors.requestType">{{
                             form.errors.requestType
                         }}</p>
                 </div>
@@ -78,7 +78,9 @@
                     <input
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="quantity" type="number" v-model="form.quantity">
-                    <p class="text-red-500 text-xs italic" v-if="form.errors.quantity">{{ form.errors.quantity }}</p>
+                    <p class="text-red-500 text-xs italic mt-3" v-if="form.errors.quantity">{{
+                            form.errors.quantity
+                        }}</p>
                 </div>
                 <div class="mb-4" v-if="form.requestType === 'sell'">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="start_date">
@@ -87,7 +89,7 @@
                     <input
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="start_date" type="date" v-model="form.start_date">
-                    <p class="text-red-500 text-xs italic" v-if="form.errors.start_date">{{
+                    <p class="text-red-500 text-xs italic mt-3" v-if="form.errors.start_date">{{
                             form.errors.start_date
                         }}</p>
                 </div>
@@ -98,7 +100,9 @@
                     <input
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="end_date" type="date" v-model="form.end_date">
-                    <p class="text-red-500 text-xs italic" v-if="form.errors.end_date">{{ form.errors.end_date }}</p>
+                    <p class="text-red-500 text-xs italic mt-3" v-if="form.errors.end_date">{{
+                            form.errors.end_date
+                        }}</p>
                 </div>
                 <div class="flex items-center justify-between">
                     <button

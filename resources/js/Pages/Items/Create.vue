@@ -9,7 +9,7 @@
                     <input
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="name" type="text" v-model="form.name">
-                    <p class="text-red-500 text-xs italic" v-if="form.errors.name">{{ form.errors.name }}</p>
+                    <p class="text-red-500 text-xs italic mt-3" v-if="form.errors.name">{{ form.errors.name }}</p>
                 </div>
 
                 <div class="mb-4">
@@ -19,7 +19,7 @@
                     <input
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="sku" type="text" v-model="form.sku">
-                    <p class="text-red-500 text-xs italic" v-if="form.errors.sku">{{ form.errors.sku }}</p>
+                    <p class="text-red-500 text-xs italic mt-3" v-if="form.errors.sku">{{ form.errors.sku }}</p>
                 </div>
 
                 <div class="mb-4">
@@ -31,7 +31,7 @@
                         id="categories" v-model="form.categories" multiple>
                         <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
                     </select>
-                    <p class="text-red-500 text-xs italic" v-if="form.errors.categories">{{
+                    <p class="text-red-500 text-xs italic mt-3" v-if="form.errors.categories">{{
                             form.errors.categories
                         }}</p>
                 </div>
